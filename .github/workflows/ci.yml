@@ -22,7 +22,7 @@ jobs:
       - name: Setup Cachix Binary Cache
         uses: cachix/cachix-action@v17
         with:
-          name: 4rmcyt  # <-- Update with your actual cache name
+          name: 4rmcyt
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
       - name: Check Nix Formatting
