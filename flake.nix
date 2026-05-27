@@ -28,8 +28,13 @@
       nixosModules.default = import ./module.nix;
 
       # Evaluated via `nix flake check` in CI
-      checks = forAllSystems (system: {
-        buildTest = self.packages.${system}.default;
-      });
+      checks = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system}; in
+        {
+          buildTest = self.packages.${system}.default;
+          lint = pkgs.runCommand "lint" { buildInputs = [ pkgs.python3Packages.flake8 ]; } ''
+            flake8 ${./main.py} && touch $out
+          '';
+        });
     };
 }
