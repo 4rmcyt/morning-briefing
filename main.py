@@ -65,7 +65,7 @@ def push_to_home_assistant(briefing_text):
     payload = {"state": "Updated", "attributes": {"text": briefing_text}}
     try:
         req = requests.post(HA_URL, json=payload, headers=headers, timeout=5)
-        return req.status_code in
+        return req.status_code in (200, 201)
     except Exception as e:
         print(f"Home Assistant REST API error: {e}", file=sys.stderr)
         return False
