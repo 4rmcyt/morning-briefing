@@ -1,0 +1,29 @@
+name: "CI Pipeline"
+
+on:
+    push:
+        branches: ["main", "master"]
+    pull_request:
+        branches: ["main", "master"]
+
+jobs:
+    check-and-build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Install Nix
+              uses: determinateSystems/nix-installer-action@v14
+
+            - name: Setup Magic Nix Cache
+              uses: determinateSystems/magic-nix-cache-action@v8
+
+            - name: Check Nix Code Formatting
+              run: nix fmt -- --check
+
+            - name: Evaluate Flake Metadata & Run Checks
+              run: nix flake check
+
+            - name: Build Output Packages
+              run: nix build .#default
