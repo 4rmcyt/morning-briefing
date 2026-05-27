@@ -5,11 +5,14 @@ with lib;
 let
   cfg = config.services.morning-briefing;
 
-  briefingScript = pkgs.writers.writePython3Bin "morning-briefing" {
-    libraries = with pkgs.python3Packages; [ caldav requests ];
-  } (builtins.readFile ./main.py);
+  briefingScript = pkgs.writers.writePython3Bin "morning-briefing"
+    {
+      libraries = with pkgs.python3Packages; [ caldav requests ];
+    }
+    (builtins.readFile ./main.py);
 
-in {
+in
+{
   options.services.morning-briefing = {
     enable = mkEnableOption "Morning Briefing generation service";
 

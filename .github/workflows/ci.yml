@@ -26,7 +26,7 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
       - name: Check Nix Formatting
-        run: nix fmt -- --check
+        run: nix fmt -- --check .
 
       - name: Evaluate Flake Checks
         run: nix flake check
